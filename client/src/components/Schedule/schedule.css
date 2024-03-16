@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* position: absolute;
+    left: 50%;
+    translate: -50%; */
+    width: 90%;
+    padding: 20px 50px;
+    border-radius: 25px;
+    background: #D9D9FF;
+    /* box-shadow:  20px 20px 60px #b8b8d9,
+                -20px -20px 60px #fafaff; */
+    box-shadow: 5px 5px 10px rgb(185, 185, 185);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#classs{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.btn{
+    background-color: #000000;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    font-size: large;
+    letter-spacing:2px ;
+    padding: 10px 50px;
+    border-radius: 50px;
+    box-shadow: inset 4px 4px 5px rgb(95, 95, 95), 4px 4px 8px 2px rgb(140, 140, 140);
+}
+
+.btn:hover{
+    box-shadow: inset 2px 3px 5px grey, 2px 2px 5px rgb(140, 140, 140);
+}
+
+.btn:active{
+    box-shadow: none;
+    box-shadow: inset -3px -3px 4px rgb(64, 64, 64),inset 3px 3px 4px black;
+}
