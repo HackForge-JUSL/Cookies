@@ -3,7 +3,9 @@ import "./quiz.css";
 import { Link } from "react-router-dom";
 import { QuestionContext } from "../../context/QuestionContext";
 import axios from "axios";
-function Inputs({ sub, options = [], id }) {
+
+
+function Inputs({ sub, choices = [], id }) {
   const {
     subject,
     setSubject,
@@ -13,6 +15,8 @@ function Inputs({ sub, options = [], id }) {
     setTopic,
     number,
     setNumber,
+    options,
+    setOptions,
   } = useContext(QuestionContext);
 
   const handleChange = async (e) => {
@@ -20,17 +24,21 @@ function Inputs({ sub, options = [], id }) {
       const value = e.target.value;
       setSubject(value);
       console.log(value);
-      try {
-        axios
-          .get("http://localhost:8000/api/users/gettopics", {
-            subject: value,
-          })
-          .then((res) => {
-            console.log(res);
-          });
-      } catch (err) {
-        console.log(err);
-      }
+      const data = {
+        subject: value,
+      };
+
+      console.log(data);
+
+      await axios
+        .post("http://localhost:8000/api/users/gettopics", data)
+        .then((res) => {
+          console.log(res.data.data);
+          const newoptions = res.data.data;
+          if (newoptions) setOptions(newoptions);
+          else setOptions([]);
+          console.log(options);
+        });
     } else if (id == "topic") {
       setTopic(e.target.value);
     } else if (id == "time") {
@@ -65,7 +73,7 @@ function Inputs({ sub, options = [], id }) {
           }
           onChange={handleChange}
         >
-          {options.map((option) => {
+          {choices.map((option) => {
             return <option value={option}>{option}</option>;
           })}
         </select>
@@ -84,9 +92,11 @@ function Quiz() {
     setTopic,
     number,
     setNumber,
+    options,
+    setOptions,
   } = useContext(QuestionContext);
   //console.log(subject)
-  let options = [];
+
   // useEffect(()=>{
   //   const preset= async ()=>{
   console.log(subject);
@@ -114,16 +124,17 @@ function Quiz() {
     <div className="wraper">
       <Inputs
         sub={"Subject"}
-        options={["Physics", "Maths", "Chemistry", "Biology"]}
+        choices={["Physics", "Maths", "Chemistry", "Biology"]}
         id="subject"
       />
-      <Inputs sub={"Topics"} options={[]} id="topic" />
+      <Inputs sub={"Topics"} choices={options} id="topic" />
       <Inputs
         sub={"Time-limit"}
-        options={["5 min", "10 min", "15 min"]}
+        choices={["5 min", "10 min", "15 min"]}
         id="time"
       />
-      <Inputs sub={"No. of Question"} options={[5, 10]} id="number" />
+
+      <Inputs sub={"No. of Question"} choices={[5, 10]} id="number" />
 
       <p>
         <Link to="/Questions"> Let's Start </Link>
