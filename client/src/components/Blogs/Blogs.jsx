@@ -29,6 +29,17 @@ function Blogs() {
 
   const [blogData, setBlogData] = useState([]);
 
+  // useEffect(() => {
+  //   fetch('http://localhost:5001/api/blog')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setBlogData(data[blogData]);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching blog data:', error);
+  //     });
+  // }, []);
+
   useEffect(() => {
     axios.get('/api/blog')
     .then((response) => {
@@ -39,6 +50,10 @@ function Blogs() {
     })
   }, [])
 
+  // console.log(blogData);
+
+
+ 
 
   return (
     <div id="blog-wraper">
@@ -48,6 +63,10 @@ function Blogs() {
         </div>
         <div className="blog-container">
 
+
+          {/* {blogData.map((blog, index) => (
+            <Card key={index} tag={blog.tag} title={blog.title} message={blog.message} />
+          ))} */}
           {
             blogData.map((blog) => (
               <Card key={index} tag={blog.tag} title={blog.title} message={blog.message} />
