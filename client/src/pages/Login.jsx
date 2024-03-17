@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/Authcontext";
 import "./Style/Login.scss";
 import axios from "axios";
@@ -7,8 +7,9 @@ const Login = () => {
   const data = { email: "", password: "" };
   const [err, setErr] = useState(false);
   const { user, setUser, isLoggedin, setIsLoggedin } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const [inputdata, setInputdata] = useState(data);
+
 
   const handleSumbit = async (e) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ const Login = () => {
       console.log(inputdata);
 
       await axios
-        .post("http://localhost:8000/SmartLab/users/login", inputdata)
+        .post("http://localhost:8000/api/users/login", inputdata)
         .then((res) => {
           console.log(res.data.user.email);
 
@@ -39,6 +40,7 @@ const Login = () => {
 
           setIsLoggedin(true);
           console.log(user);
+          navigate("/")
         });
     } catch (err) {
       setErr(true);
@@ -50,7 +52,7 @@ const Login = () => {
     <div className="formcontainer">
       <div className="formwrapper">
         <span className="logo">
-          <img src="./OutShineLogo.png" alt="OutShineLogo" />
+          <img src="https://cdn-icons-png.flaticon.com/128/8224/8224757.png" alt="OutShineLogo" />
           <h1>OutShine</h1>
         </span>
         <span className="title">Register</span>
@@ -63,7 +65,7 @@ const Login = () => {
 
           {err && <span>Something went Wrong</span>}
         </form>
-        <p>You do not have an account ? </p>
+        <p>You do not have an account ? <Link to="/register"> Register</Link> </p>
       </div>
     </div>
   );
